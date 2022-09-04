@@ -34,7 +34,7 @@
                         <thead>
                             <tr class="text-center">
                                 <th>Id</th>
-                                <th>Perfil</th>
+                                <th>Perfi</th>
                                 <th>Cédula</th>
                                 <th>Nombres</th>
                                 <th>Apellidos</th>

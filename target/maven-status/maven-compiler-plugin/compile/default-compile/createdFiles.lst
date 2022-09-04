@@ -1,0 +1,12 @@
+datos\VentaDaoJDBC.class
+dominio\Perfil.class
+dominio\Usuario.class
+dominio\Producto.class
+datos\PerfilDaoJDBC.class
+datos\UsuarioDaoJDBC.class
+dominio\DetalleVenta.class
+web\ServletControlador.class
+datos\Conexion.class
+dominio\Venta.class
+datos\DetalleVentaDaoJDBC.class
+datos\ProductoDaoJDBC.class

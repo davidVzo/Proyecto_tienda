@@ -44,7 +44,7 @@
         
 
           </div>
-        <jsp:include page="WEB-INF/paginas/comunes/footer.jsp"/>
+        <jsp:include page="/WEB-INF/paginas/comunes/footer.jsp"/>
         
       
         <a class="scroll-to-top rounded" href="#page-top">

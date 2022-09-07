@@ -33,6 +33,12 @@ public class ServletControlador extends HttpServlet {
                 case "listaP":
                     this.listarPerfil(request, response);
                     break;
+                case "eliminarPerfil":
+                    this.eliminarPerfil(request, response);
+                    break;
+                case "editarPerfil":
+                    this.editarPerfil(request, response);
+                    break;
                 case "listaU":
                     this.listarUsuario(request, response);
                     break;
@@ -41,6 +47,9 @@ public class ServletControlador extends HttpServlet {
                     break;
                 case "listaProd":
                     this.listarProducto(request, response);
+                    break;
+                case "eliminarProducto":
+                    this.eliminarProducto(request, response);
                     break;
                 case "listaV":
                     this.listarVenta(request, response);
@@ -73,7 +82,9 @@ public class ServletControlador extends HttpServlet {
                 case "insertarProducto":
                     this.insertarProducto(request, response);
                     break;
-
+                    case "editarPerfil":
+                    this.modificarPerfil(request, response);
+                    break;
                 default:
                     this.listarUsuario(request, response);
             }
@@ -86,7 +97,6 @@ public class ServletControlador extends HttpServlet {
     //metodo accionDefault
     private void listarUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Usuario> usuarios;
-        List<Perfil> perfiles;
 
         usuarios = new UsuarioDaoJDBC().listar();
 
@@ -159,6 +169,17 @@ public class ServletControlador extends HttpServlet {
 
     }
 
+    private void editarPerfil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //recuperar el idCliemnte
+        int idPerfil = Integer.parseInt(request.getParameter("idperfil"));
+        Perfil perfil = new PerfilDaoJDBC().encontrar(new Perfil(idPerfil));
+        //vamos a setear los atributos en un forulario 
+        request.setAttribute("perfil", perfil);
+        //guardar en na variable tipo string la url a donde se va a redireccionar el servelt 
+        String jspEditar = "/WEB-INF/paginas/perfil/editarPerfiles.jsp";
+        request.getRequestDispatcher(jspEditar).forward(request, response);
+    }
+
     private void insertarProducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //recuperamos los datos de un formulario
         String codigo = request.getParameter("codigo");
@@ -202,6 +223,32 @@ public class ServletControlador extends HttpServlet {
 
     }
 
+    private void eliminarPerfil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //capturamos los datos del id cliente 
+        int idPerfil = Integer.parseInt(request.getParameter("idperfil"));
+        Perfil perfil = new Perfil(idPerfil);
+        //Eliminamos 
+        int registrosModificados = new PerfilDaoJDBC().eliminar(perfil);
+        //imprimios los reggistros actualizados 
+        System.out.println("registros" + registrosModificados);
+        String accion = "";
+        this.listarPerfil(request, response);
+
+    }
+
+    private void eliminarProducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //capturamos los datos del id cliente 
+        String idProducto = request.getParameter("codproducto");
+        Producto producto = new Producto(idProducto);
+        //Eliminamos 
+        int registrosModificados = new ProductoDaoJDBC().eliminar(producto);
+        //imprimios los reggistros actualizados 
+        System.out.println("registros" + registrosModificados);
+        String accion = "";
+        this.listarProducto(request, response);
+
+    }
+
     private void listarPerfil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Perfil> perfiles;
 
@@ -215,12 +262,15 @@ public class ServletControlador extends HttpServlet {
     }
 
     private void listarProducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-         
+
         List<Producto> productos;
+       
+
         productos = new ProductoDaoJDBC().listar();
+      
         HttpSession sesion = request.getSession();
         sesion.setAttribute("productos", productos);
-
+       
         response.sendRedirect("productos.jsp");
     }
 
@@ -246,6 +296,21 @@ public class ServletControlador extends HttpServlet {
 
         response.sendRedirect("detalles.jsp");
 
+    }
+
+    private void modificarPerfil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int idperfil = Integer.parseInt(request.getParameter("idperfil"));
+        String nombre = request.getParameter("nombre");
+        String descripcion = request.getParameter("descripcion");
+
+        //creamos un obteto 
+        Perfil perfil = new Perfil(idperfil, nombre, descripcion);
+        //insertamos el nuevo objeto a nuestra base de datos 
+        int registrosModificados = new PerfilDaoJDBC().actualizar(perfil);
+        //imprimimos en consola 
+        System.out.println("registrosModificados " + registrosModificados);
+        String accion = "";
+        this.listarPerfil(request, response);
     }
 
 }

@@ -40,7 +40,7 @@
                                 <th>Categoria</th>
                                 <th>Descripcion</th>
                                 <th>Cantidad Disponible</th>
-                                <th>Precio</th>
+                                <th>Precio Unitario</th>
                            
                                 <th>Editar</th>
                                 <th>Eliminar</th>
@@ -48,6 +48,7 @@
                         </thead>
                         <tbody> 
                             <c:forEach var="producto" items="${productos}">
+                                
                                 <tr>
 
                                     <td>${producto.codProducto} </td>
@@ -56,8 +57,9 @@
                                     <td> ${producto.nombreProducto} </td><!-- comment -->
                                     <td> ${producto.categoria}</td>
                                     <td> ${producto.descripcion}</td>
-                                    <td> ${producto.can_disponible}</td>
+                                    <td> ${producto.can_disponible}                              
                                     <td> ${producto.precio}</td>
+                                 
                           
 
                                     <td> 
@@ -66,12 +68,13 @@
                                         </a>
                                     </td> 
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/ServletControlador?accion=eliminarProducto&codPRODUCTO=${producto.codProducto}" class="btn btn-danger btn-circle">
+                                        <a href="${pageContext.request.contextPath}/ServletControlador?accion=eliminarProducto&codproducto=${producto.codProducto}" class="btn btn-danger btn-circle"onclick="return confirm('seguro que desea eliminar?') ">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
 
-                                </tr> </c:forEach>
+                                </tr> 
+                            </c:forEach>
 
                             </tbody>
                         </table>

@@ -71,7 +71,7 @@
         -->    <script src="js/sb-admin-2.min.js"></script>
 
     </body>
-<jsp:include page="WEB-INF/paginas/comunes/footer.jsp"/>
+<jsp:include page="/WEB-INF/paginas/comunes/footer.jsp"/>
 </html>
 
 

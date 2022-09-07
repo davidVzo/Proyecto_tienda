@@ -54,7 +54,7 @@
                                     <td>${usuario.idUsuario} </td>
                                     <td>${usuario.nombrePerfil}</td>
                                     <td> ${usuario.cedula}</td>
-                                    <td> ${usuario.nombres} </td><!-- comment -->
+                                    <td> ${usuario.nombres} </td>
                                     <td> ${usuario.apellidos}</td>
                                     <td> ${usuario.direccion}</td>
                                     <td> ${usuario.telefono}</td>
@@ -68,7 +68,7 @@
                                         </a>
                                     </td> 
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/ServletControlador?accion=eliminarUsuario&idusuario=${usuario.idUsuario}" class="btn btn-danger btn-circle">
+                                        <a href="${pageContext.request.contextPath}/ServletControlador?accion=eliminarUsuario&idusuario=${usuario.idUsuario}"onclick="return confirm('seguro que desea eliminar?') " class="btn btn-danger btn-circle">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>

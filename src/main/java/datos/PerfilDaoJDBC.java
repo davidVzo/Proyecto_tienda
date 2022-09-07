@@ -18,7 +18,7 @@ import java.util.List;
 public class PerfilDaoJDBC {
     private static final String SQL_SELECT = "SELECT idPerfil ,nombrePerfil, descripcionPerfil FROM perfil";
 
-    private static final String SQL_SELECT_BY_ID = "SELECT idPerfil ,nombrePerfil, descripcionPerfil FROM usuario WHERE idPerfil = ?";
+    private static final String SQL_SELECT_BY_ID = "SELECT idPerfil ,nombrePerfil, descripcionPerfil FROM perfil WHERE idPerfil = ?";
 
     private static final String SQL_INSERT = "INSERT INTO perfil (nombrePerfil, descripcionPerfil) VALUES(?, ?)";
 
@@ -89,6 +89,7 @@ public class PerfilDaoJDBC {
             
             stmt.setString(1, perfil.getNombre());
             stmt.setString(2, perfil.getDescripcion());
+            stmt.setInt(3, perfil.getIdPerfil());
             
 
             rows = stmt.executeUpdate();
@@ -121,6 +122,37 @@ public class PerfilDaoJDBC {
             Conexion.close(conn);
         }
         return rows;
+    }
+    
+       public Perfil encontrar(Perfil perfil) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
+            stmt.setInt(1, perfil.getIdPerfil());
+            rs = stmt.executeQuery();
+
+            rs.absolute(1);
+
+            //obtenemos mediante el java beasn 
+            String nombre = rs.getString("nombrePerfil");
+            String descripcion = rs.getString("descripcionPerfil");
+         
+            //Seteamos los valores 
+            perfil.setNombre(nombre);
+            perfil.setDescripcion(descripcion);
+        
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }finally {
+            Conexion.close(rs);
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+        return perfil; 
+
     }
     
 }
